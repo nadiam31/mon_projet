@@ -1,0 +1,19 @@
+package test;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import pack.Joueurs;
+import pack.Plateau;
+
+public class TestJoueurs {
+
+	@Test
+	public void test() {
+		Plateau.setEnJeu(true);
+		Joueurs.J1.setVie(1);
+		Joueurs.J1.Meurt();
+	}
+
+}

@@ -1,0 +1,206 @@
+package pack;
+
+public class Creatures extends Cartes {
+	//Traits de base
+	private int vie;
+	private int force;
+	
+		// Constructeur
+	public Creatures(String name, int cout, int vie, int force){
+		super(name, cout);
+		this.vie = vie;
+		this.force = force;
+	}
+	
+	// (Nom, Cout, Vie, Force) Instanciation
+	
+	//Creatures du joueur 1
+		static Creatures ID_1_1 = new Creatures("Soldat", 2, 3, 2);
+		static Creatures ID_2_1 = new Creatures("Magicien novice", 1, 2, 1);
+		static Creatures ID_3_1 = new Creatures("Videur", 2, 2, 2);
+		static Creatures ID_4_1 = new Creatures("Bourrin excité", 4, 2, 4);
+		static Creatures ID_5_1 = new Creatures("Tireur d'élite", 3, 1, 3);
+		static Creatures ID_6_1 = new Creatures("Chasseur impatient", 5, 2, 4);
+	//Creatures du joueur 2	
+		static Creatures ID_1_2 = new Creatures("Soldat", 2, 3, 2);
+		static Creatures ID_2_2 = new Creatures("Magicien novice", 1, 2, 1);
+		static Creatures ID_3_2 = new Creatures("Videur", 2, 2, 2);
+		static Creatures ID_4_2 = new Creatures("Bourrin excité", 4, 2, 4);
+		static Creatures ID_5_2 = new Creatures("Tireur d'élite", 3, 1, 3);
+		static Creatures ID_6_2 = new Creatures("Chasseur impatient", 5, 2, 4);
+	
+	public String toString(){
+		String retour;
+		
+		retour = "========== Créature ==========";
+		retour+= "\n"+super.toString();
+		retour+= "\nVie: "+this.vie+"  Force: "+this.force;
+		retour+= "\nEffet: "+this.effet;
+		retour+= "\nFrappe maintenant ?: "+this.peutFrapper;
+		retour+= "\nIgnore le recul ?: "+this.ignoreRecul;
+		retour+= "\n==============================";
+
+		return retour;
+	}
+
+	public void JouerJ1(Joueurs id, int nbre, int cible){
+		if(id.getMana() >= ((Creatures) id.getDeckJ1()[nbre]).getCout() && Plateau.getNbreCreatures() < 10 && id.isJoue() == true && ((Creatures) id.getDeckJ1()[nbre]).getEtat() == 2){
+        // Verification de l'état général du jeu
+			((Creatures) id.getDeckJ1()[nbre]).setEtat(3);//Pose sur le plateau
+		
+        int crea = Plateau.getNbreCreatures() + 1; //On incrémente le nombre de créatures sur le plateau
+		Plateau.setNbreCreatures(crea);
+
+		int mn = id.getMana() - ((Creatures) id.getDeckJ1()[nbre]).getCout(); //On soustrait le cout de la créature pour avoir le mana restant
+		id.setMana(mn);
+		
+		int cart = id.getNombreCartes() - 1; //On soustrait une carte à la main du joueur
+		id.setNombreCartes(cart);
+		
+		System.out.println("\nMAGIC-LOG > PLAYER "+id.getName()+" PLAYS "+((Creatures) id.getDeckJ1()[nbre]).getName() +"("+((Creatures) id.getDeckJ1()[nbre]).getForce()+"|"+((Creatures) id.getDeckJ1()[nbre]).getVie()+")");
+		System.out.println("MAGIC-LOG > "+id.getName()+" MANA LEFT: "+id.getMana()+"/"+id.getManaMax()+"" );
+		System.out.println("MAGIC-LOG > THE BOARD HAVE "+Plateau.getNbreCreatures()+" MINIONS NOW" );
+		
+	}
+	
+	public void JouerJ2(Joueurs id, int nbre, int cible){
+		if(id.getMana() >= ((Creatures) id.getDeckJ2()[nbre]).getCout() && Plateau.getNbreCreatures() < 10 && id.isJoue() == true && ((Creatures) id.getDeckJ2()[nbre]).getEtat() == 2){
+        // Verification de l'état général du jeu
+			((Creatures) id.getDeckJ2()[nbre]).setEtat(3);//Pose sur le plateau
+		
+        int crea = Plateau.getNbreCreatures() + 1; //On incrémente le nombre de créatures sur le plateau
+		Plateau.setNbreCreatures(crea);
+
+		int mn = id.getMana() - ((Creatures) id.getDeckJ2()[nbre]).getCout(); //On soustrait le cout de la créature pour avoir le mana restant
+		id.setMana(mn);
+		
+		int cart = id.getNombreCartes() - 1; //On soustrait une carte à la main du joueur
+		id.setNombreCartes(cart);
+		
+		System.out.println("\nMAGIC-LOG > PLAYER "+id.getName()+" PLAYS "+((Creatures) id.getDeckJ2()[nbre]).getName() +"("+((Creatures) id.getDeckJ2()[nbre]).getForce()+"|"+((Creatures) id.getDeckJ2()[nbre]).getVie()+")");
+		System.out.println("MAGIC-LOG > "+id.getName()+" MANA LEFT: "+id.getMana()+"/"+id.getManaMax()+"" );
+		System.out.println("MAGIC-LOG > THE BOARD HAVE "+Plateau.getNbreCreatures()+" MINIONS NOW" );
+		
+		
+	}
+	
+	public void FrappeJ1(Joueurs id, int nbre, Joueurs id2, int nbre2){
+		if(id.isJoue() == true && this.peutFrapper == true && this.getEtat() == 3 && ((Creatures) id2.getDeckJ2()[nbre2]).getEtat() == 3){
+			
+			int deg = ((Creatures) id2.getDeckJ2()[nbre2]).getVie() - this.getForce(); //Soustrait la force aux point de vie de la victime.
+			((Creatures) id2.getDeckJ2()[nbre2]).setVie(deg);
+			
+			if(this.ignoreRecul == false){
+			int deg2 = this.getVie() - ((Creatures) id2.getDeckJ2()[nbre2]).getForce();
+			this.setVie(deg2);
+				}
+			
+			this.peutFrapper = false; //La créature ne tape qu'une fois par tour
+			
+			System.out.println("\nMAGIC-LOG > ("+id.getName()+")"+((Creatures) id.getDeckJ1()[nbre]).getName()+" HIT "+((Creatures) id2.getDeckJ2()[nbre2]).getName()+")");
+			System.out.println("\nMAGIC-LOG > ("+id2.getName()+")"+((Creatures) id2.getDeckJ2()[nbre2]).getName()+ " TAKES "+((Creatures) id.getDeckJ1()[nbre]).getForce()+" DAMAGES");
+			
+			if(this.ignoreRecul == false){
+			System.out.println("MAGIC-LOG > ("+id.getName()+")"+((Creatures) id.getDeckJ1()[nbre]).getName()+ " TAKES "+((Creatures) id.getDeckJ2()[nbre2]).getForce()+" DAMAGES");
+				}
+			else{System.out.println("MAGIC-LOG > ("+id.getName()+")"+((Creatures) id.getDeckJ1()[nbre]).getName()+ " DIDN'T TAKE DAMAGE");};
+			System.out.println("\nMAGIC-LOG > LIFE LEFT OF ("+id2.getName()+")"+((Creatures) id2.getDeckJ2()[nbre2]).getName()+" > "+((Creatures) id2.getDeckJ2()[nbre2]).getVie());	
+			
+			if(this.ignoreRecul == false){
+			System.out.println("MAGIC-LOG > LIFE LEFT OF ("+id.getName()+")"+((Creatures) id.getDeckJ1()[nbre]).getName()+" > "+((Creatures) id.getDeckJ1()[nbre]).getVie());
+			 	};
+			
+			((Creatures) id.getDeckJ1()[nbre]).Meurt(id);
+			((Creatures) id.getDeckJ2()[nbre2]).Meurt(id2); 
+			}
+		}
+		public void FrappeJ2(Joueurs id, int nbre, Joueurs id2, int nbre2){
+			if(id.isJoue() == true && this.peutFrapper == true && this.getEtat() == 3 && ((Creatures) id2.getDeckJ1()[nbre2]).getEtat() == 3){
+				
+				int deg = ((Creatures) id2.getDeckJ1()[nbre2]).getVie() - this.getForce(); //Soustrait la force aux point de vie de la victime.
+				((Creatures) id2.getDeckJ1()[nbre2]).setVie(deg);
+				
+				if(this.ignoreRecul == false){
+				int deg2 = this.getVie() - ((Creatures) id2.getDeckJ1()[nbre2]).getForce();
+				this.setVie(deg2);
+					}
+				
+				this.peutFrapper = false; //La créature ne tape qu'une fois par tour
+
+				System.out.println("\nMAGIC-LOG > ("+id.getName()+")"+((Creatures) id.getDeckJ1()[nbre]).getName()+" HIT "+((Creatures) id2.getDeckJ2()[nbre2]).getName()+")");
+				System.out.println("\nMAGIC-LOG > ("+id2.getName()+")"+((Creatures) id2.getDeckJ2()[nbre2]).getName()+ " TAKES "+((Creatures) id.getDeckJ1()[nbre]).getForce()+" DAMAGES");
+				
+				if(this.ignoreRecul == false){
+				System.out.println("MAGIC-LOG > ("+id.getName()+")"+((Creatures) id.getDeckJ1()[nbre]).getName()+ " TAKES "+((Creatures) id.getDeckJ2()[nbre2]).getForce()+" DAMAGES");
+					}
+				else{System.out.println("MAGIC-LOG > ("+id.getName()+")"+((Creatures) id.getDeckJ1()[nbre]).getName()+ " DIDN'T TAKE DAMAGE");};
+				System.out.println("\nMAGIC-LOG > LIFE LEFT OF ("+id2.getName()+")"+((Creatures) id2.getDeckJ2()[nbre2]).getName()+" > "+((Creatures) id2.getDeckJ2()[nbre2]).getVie());	
+				
+				if(this.ignoreRecul == false){
+				System.out.println("MAGIC-LOG > LIFE LEFT OF ("+id.getName()+")"+((Creatures) id.getDeckJ1()[nbre]).getName()+" > "+((Creatures) id.getDeckJ1()[nbre]).getVie());
+				};
+				
+				((Creatures) id.getDeckJ1()[nbre]).Meurt(id);
+				((Creatures) id.getDeckJ2()[nbre2]).Meurt(id2);
+			}
+			
+	}
+	public void FrappeHero(Joueurs id, Joueurs id2){
+		if(id.isJoue() == true && this.peutFrapper == true && this.getEtat() == 3){
+			
+			int deg = id2.getVie() - this.getForce(); //Soustrait la force aux point de vie de la victime.
+			id2.setVie(deg);
+		
+			this.peutFrapper = false; //La créature ne tape qu'une fois par tour
+			
+			System.out.println("\nMAGIC-LOG > ("+id.getName()+")"+this.getName()+" HIT "+id2.getName());
+			System.out.println("MAGIC-LOG > "+id2.getName()+ " TAKES "+this.getForce()+" DAMAGES");
+			System.out.println("MAGIC-LOG > LIFE LEFT OF "+id2.getName()+" > "+id2.getVie());
+			
+			id2.Meurt();
+			
+		}
+		
+	}
+	
+	public void Meurt(Joueurs id){
+		if(this.vie <= 0) {
+
+			this.setEtat(0); //Supprime la carte du jeu
+
+	        int crea = Plateau.getNbreCreatures() - 1; //On décrémente le nombre de créatures sur le plateau
+			Plateau.setNbreCreatures(crea);	
+			
+			System.out.println("\nMAGIC-LOG > ("+id.getName()+")"+this.getName()+" IS DEAD | REMOVED");
+			System.out.println("MAGIC-LOG > THE BOARD HAVE "+Plateau.getNbreCreatures()+" MINIONS NOW" );
+	
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	public int getVie() {
+		return vie;
+	}
+
+	public void setVie(int vie) {
+		this.vie = vie;
+	}
+
+	public int getForce() {
+		return force;
+	}
+
+	public void setForce(int force) {
+		this.force = force;
+	}
+
+}

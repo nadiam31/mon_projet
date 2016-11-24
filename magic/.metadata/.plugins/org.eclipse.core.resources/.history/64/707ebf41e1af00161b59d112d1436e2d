@@ -1,0 +1,27 @@
+package test;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import pack.Creatures;
+import pack.Joueurs;
+import pack.Plateau;
+
+public class TestCreatures {
+
+	@Test
+	public void test() {
+		//Creatures.ID_1_1; //La plateau EST en jeu
+		Joueurs.J1.setVie(0); //Le joueur 1 n'a plus de vie
+		Joueurs.J1.Meurt(); //Le joueur DOIT mourir
+		
+		assertFalse("Fail", Plateau.isEnJeu()); //Le plateau ne doit PAS être en jeu
+		
+		/**
+		 * Si le joueur est vraiment mort, le plateau ne doit PAS être en jeu, donc le test DOIT marcher
+		 * 
+		 */
+	}
+
+}

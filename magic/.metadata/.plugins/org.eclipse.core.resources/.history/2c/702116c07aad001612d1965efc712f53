@@ -1,0 +1,29 @@
+package test;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import pack.Joueurs;
+import pack.Plateau;
+
+public class TestJoueurs {
+
+	@Test
+	public void test() {
+		Plateau.setEnJeu(true); //La plateau EST en jeu
+		Joueurs.J1.setVie(0); //Le joueur 1 n'a plus de vie
+		Joueurs.J1.Meurt(); //Le joueur DOIT mourir
+		
+		assertFalse("Fail", Plateau.isEnJeu()); //Le plateau ne doit PAS être en jeu
+	}
+	
+	@Test
+	public void test2(){
+		Plateau.setEnJeu(true);
+		Joueurs.J1.setNombreCartes(0);
+		Joueurs.J1.Pioche();
+		
+	}
+
+}

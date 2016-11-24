@@ -1,0 +1,29 @@
+package test;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import pack.Joueurs;
+import pack.Plateau;
+
+public class TestJoueurs {
+
+	@Test
+	public void test() {
+		Plateau.setEnJeu(true);
+		Joueurs.J1.setVie(0);
+		Joueurs.J1.Meurt();
+	}
+	
+	@Test
+	public void test2(){
+		Plateau.setEnJeu(true);
+		Joueurs.J1.setNombreCartes(0);
+		Joueurs.J1.Pioche();
+		
+		int nbre = 2;
+		Joueurs.J1.getNombreCartes().equals(nbre);
+	}
+
+}

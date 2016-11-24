@@ -1,0 +1,281 @@
+package pack;
+
+public class Sorts extends Cartes {
+	private String couleur;
+	private String effet;
+	private int nombre;
+	
+	private int type = 2;
+	
+	 // (Nom, Cout, Couleur, Nombre, Effet"
+	 static Sorts ID_1_1 = new Sorts("Babale de feu", 4, "Rouge", 6, "Inflige 6 points de dégats");
+	 static Sorts ID_2_1 = new Sorts("Soins rapides", 2, "Blanc", 5, "Soigne 5 points de vie");
+	 static Sorts ID_3_1 = new Sorts("Destruction", 3, "Noir", 0, "Détruit un batiment");
+	 static Sorts ID_4_1 = new Sorts("Régénération", 3, "Blanc", 0, "Rend tout ses points de vie à un serviteur");
+	 static Sorts ID_5_1 = new Sorts("Croissance temporaire", 0, "Bleu", 2, "Vous confère 2 cristaux de mana pour ce tour uniquement");
+	 static Sorts ID_6_1 = new Sorts("Renforcement", 3, "Vert", 0, "Donne +2/+2 à une créature");
+	 static Sorts ID_7_1 = new Sorts("Crâme héroique", 6, "Rouge", 8, "Inflige 8 points de dégats au héro adverse");
+	 
+	 static Sorts ID_1_2 = new Sorts("Babale de feu", 4, "Rouge", 6, "Inflige 6 points de dégats");
+	 static Sorts ID_2_2 = new Sorts("Soins rapides", 2, "Blanc", 5, "Soigne 5 points de vie");
+	 static Sorts ID_3_2 = new Sorts("Destruction", 3, "Noir", 0, "Détruit un batiment");
+	 static Sorts ID_4_2 = new Sorts("Régénération", 3, "Blanc", 0, "Rend tout ses points de vie à un serviteur");
+	 static Sorts ID_5_2 = new Sorts("Croissance temporaire", 0, "Bleu", 2, "Vous confère 2 cristaux de mana pour ce tour uniquement");
+	 static Sorts ID_6_2 = new Sorts("Renforcement", 3, "Vert", 0, "Donne +2/+2 à une créature");
+	 static Sorts ID_7_2 = new Sorts("Crâme héroique", 6, "Rouge", 8, "Inflige 8 points de dégats au héro adverse");
+	 
+	public Sorts(String name, int cout, String couleur, int nombre, String effet){
+		super(name, cout);
+		this.couleur = couleur;
+		this.nombre = nombre;
+		this.effet = effet;
+	}
+	
+	public String toString(){
+		String retour;
+		
+		retour = "========== Sort ==========";
+		retour+= "\n"+super.toString();
+		retour+= "\nCouleur: "+this.couleur;
+		retour+= "\nEffet: "+this.effet;
+		retour+= "\nEtat: "+this.getEtat();
+		retour+= "\n==========================";
+				
+		return retour;
+	}	
+	
+	public void JouerJ1(Joueurs id, int nbre, int cible){
+		if(this.couleur == "Rouge" && id.getMana() >= getCout() && id.isJoue() == true && this.getEtat() == 2){
+		setEtat(0); // Le sort est consumé, il disparait du jeu
+		
+		int cart = id.getNombreCartes() - 1; //On soustrait une carte à la main du joueur
+		id.setNombreCartes(cart);
+		
+		int mn = id.getMana() - this.getCout(); //On soustrait le cout de la créature pour avoir le mana restant
+		id.setMana(mn);
+		
+			if(this.couleur == "Rouge" && nbre == -1 && this.effet == "Inflige 6 points de dégats"){ //Frappe le héro adverse
+				
+				int deg = Joueurs.J2.getVie() - this.nombre;
+				Joueurs.J2.setVie(deg);
+				
+				System.out.println("\nMAGIC-LOG > PLAYER "+id.getName()+" CAST "+this.getName()+" ON "+Joueurs.J2.getName());
+				System.out.println("MAGIC-LOG > "+id.getName()+" MANA LEFT: "+id.getMana()+"/"+id.getManaMax()+"" );
+				System.out.println("\nMAGIC-LOG > "+Joueurs.J2.getName()+" TAKES "+this.nombre+" DAMAGES DIRECTLY");
+				System.out.println("MAGIC-LOG > LIFE LEFT OF "+Joueurs.J2.getName()+" > "+Joueurs.J2.getVie());
+			}
+			else if(this.couleur == "Rouge" && nbre >= 0 && this.effet == "Inflige 6 points de dégats"){ //Frappe un serviteur
+				
+				int deg = ((Creatures) Joueurs.J2.getDeckJ2()[nbre]).getVie() - this.nombre;
+				((Creatures) Joueurs.J2.getDeckJ2()[nbre]).setVie(deg);	
+				
+				System.out.println("\nMAGIC-LOG > PLAYER "+id.getName()+" CAST "+this.getName()+" ON "+((Creatures) Joueurs.J2.getDeckJ2()[nbre]).getName());
+				System.out.println("MAGIC-LOG > "+((Creatures) Joueurs.J2.getDeckJ2()[nbre]).getName()+" TAKES "+this.nombre+" DAMAGES DIRECTLY");
+				System.out.println("MAGIC-LOG > LIFE LEFT OF ("+id.getName()+")"+((Creatures) Joueurs.J2.getDeckJ2()[nbre]).getName()+" > "+((Creatures) Joueurs.J2.getDeckJ2()[nbre]).getVie());
+				
+				((Creatures) Joueurs.J2.getDeckJ2()[nbre]).Meurt(Joueurs.J2);				
+			}
+			else if(this.couleur == "Rouge" && nbre == -1 && this.effet == "Inflige 8 points de dégats au héro adverse"){ //Frappe le héro adverse
+				
+				int deg = Joueurs.J2.getVie() - this.nombre;
+				Joueurs.J2.setVie(deg);
+				
+				System.out.println("\nMAGIC-LOG > PLAYER "+id.getName()+" CAST "+this.getName()+" ON "+Joueurs.J2.getName());
+				System.out.println("MAGIC-LOG > "+id.getName()+" MANA LEFT: "+id.getMana()+"/"+id.getManaMax()+"" );
+				System.out.println("\nMAGIC-LOG > "+Joueurs.J2.getName()+" TAKES "+this.nombre+" DAMAGES DIRECTLY");
+				System.out.println("MAGIC-LOG > LIFE LEFT OF "+Joueurs.J2.getName()+" > "+Joueurs.J2.getVie());
+			}
+		}
+		if(this.couleur == "Bleu" && id.getMana() >= getCout() && id.isJoue() == true && this.getEtat() == 2){
+			setEtat(0); // Le sort est consumé, il disparait du jeu
+				
+			int cart3 = id.getNombreCartes() - 1; //On soustrait une carte à la main du joueur
+			id.setNombreCartes(cart3);
+				
+			int mn3 = id.getMana() - this.getCout(); //On soustrait le cout de la créature pour avoir le mana restant
+			id.setMana(mn3);
+				
+			if(this.couleur == "Bleu" && nbre == 2 && this.effet == "Vous confère 2 cristaux de mana pour ce tour uniquement"){ //Sort sans cible
+				
+				int plus = Joueurs.J1.getMana() + this.nombre;
+				Joueurs.J1.setMana(plus);
+				
+				System.out.println("\nMAGIC-LOG > PLAYER "+id.getName()+" CAST "+this.getName());
+				System.out.println("MAGIC-LOG > "+id.getName()+" MANA GOT FOR THIS TURN: "+id.getMana()+"/"+id.getManaMax()+"" );
+			}
+		}	
+		if(this.couleur == "Vert" && id.getMana() >= getCout() && id.isJoue() == true && this.getEtat() == 2 &&((Creatures) Joueurs.J1.getDeckJ1()[nbre]).getEtat() == 3){
+			setEtat(0); // Le sort est consumé, il disparait du jeu
+			
+			int cart2 = id.getNombreCartes() - 1;
+			id.setNombreCartes(cart2);
+			
+			int mn2 = id.getMana() - this.getCout(); //On soustrait le cout de la créature pour avoir le mana restant
+			id.setMana(mn2);
+		
+			if(this.couleur == "Vert" && nbre >= 0 && this.effet == "Donne +2/+2 à une créature"){ //Sort sans cible
+				
+				int vie = ((Creatures) Joueurs.J1.getDeckJ1()[nbre]).getVie() + 2;
+				((Creatures) Joueurs.J1.getDeckJ1()[nbre]).setVie(vie);
+				int force = ((Creatures) Joueurs.J1.getDeckJ1()[nbre]).getForce() + 2;
+				((Creatures) Joueurs.J1.getDeckJ1()[nbre]).setForce(force);
+			
+				System.out.println("\nMAGIC-LOG > PLAYER "+id.getName()+" CAST "+this.getName()+" ON "+((Creatures) Joueurs.J1.getDeckJ1()[nbre]).getName());
+				System.out.println("MAGIC-LOG > "+id.getName()+" MANA LEFT: "+id.getMana()+"/"+id.getManaMax()+"" );
+				System.out.println("MAGIC-LOG > "+((Creatures) Joueurs.J1.getDeckJ1()[nbre]).getName()+" IS NOW: "+((Creatures) Joueurs.J1.getDeckJ1()[nbre]).getForce()+"|"+((Creatures) Joueurs.J1.getDeckJ1()[nbre]).getVie()+"" );
+		}
+		}
+		if(this.couleur == "Noir" && id.getMana() >= getCout() && id.isJoue() == true && this.getEtat() == 2 &&((Ressources) Joueurs.J2.getDeckJ2()[nbre]).getEtat() == 3){
+			setEtat(0); // Le sort est consumé, il disparait du jeu
+			
+			int cart2 = id.getNombreCartes() - 1;
+			id.setNombreCartes(cart2);
+			
+			int mn2 = id.getMana() - this.getCout(); //On soustrait le cout de la créature pour avoir le mana restant
+			id.setMana(mn2);
+		
+			if(this.couleur == "Noir" && nbre >= 0 && this.effet == "Détruit un batiment"){ //Sort ayant un batiment comme cible
+				
+				((Ressources) Joueurs.J2.getDeckJ2()[nbre]).setVie(0);
+			
+				System.out.println("\nMAGIC-LOG > PLAYER "+id.getName()+" CAST "+this.getName()+" ON "+((Ressources) Joueurs.J2.getDeckJ2()[nbre]).getName());
+				System.out.println("MAGIC-LOG > "+id.getName()+" MANA LEFT: "+id.getMana()+"/"+id.getManaMax()+"" );
+				
+				((Ressources) Joueurs.J2.getDeckJ2()[nbre]).Meurt(Joueurs.J2);
+		}
+		}
+	}
+	public void JouerJ2(Joueurs id, int nbre, int cible){
+		if(this.couleur == "Rouge" || this.couleur == "Bleu" && id.getMana() >= getCout() && Plateau.getNbreCreatures() < 10 && id.isJoue() == true && getEtat() == 2 && this.couleur != "Vert"){
+		setEtat(0); // Le sort est consumé, il disparait du jeu
+		
+		int cart = id.getNombreCartes() - 1; //On soustrait une carte à la main du joueur
+		id.setNombreCartes(cart);
+		
+		int mn = id.getMana() - this.getCout(); //On soustrait le cout de la créature pour avoir le mana restant
+		id.setMana(mn);
+		
+			if(this.couleur == "Rouge" && nbre == -1 && this.effet == "Inflige 6 points de dégats"){ //Frappe le héro adverse
+				
+				int deg = Joueurs.J1.getVie() - this.nombre;
+				Joueurs.J1.setVie(deg);
+				
+				System.out.println("\nMAGIC-LOG > PLAYER "+id.getName()+" CAST "+this.getName()+" ON "+Joueurs.J1.getName());
+				System.out.println("MAGIC-LOG > "+id.getName()+" MANA LEFT: "+id.getMana()+"/"+id.getManaMax()+"" );
+				System.out.println("\nMAGIC-LOG > "+Joueurs.J1.getName()+" TAKES "+this.nombre+" DAMAGES DIRECTLY");
+				System.out.println("MAGIC-LOG > LIFE LEFT OF "+Joueurs.J1.getName()+" > "+Joueurs.J1.getVie());
+			}
+			else if(this.couleur == "Rouge" && nbre >= 0 && this.effet == "Inflige 6 points de dégats"){ //Frappe un serviteur
+				
+				int deg = ((Creatures) Joueurs.J1.getDeckJ1()[nbre]).getVie() - this.nombre;
+				((Creatures) Joueurs.J1.getDeckJ1()[nbre]).setVie(deg);
+				
+				System.out.println("\nMAGIC-LOG > PLAYER "+id.getName()+" CAST "+this.getName()+" ON "+((Creatures) Joueurs.J1.getDeckJ1()[nbre]).getName());
+				System.out.println("MAGIC-LOG > "+((Creatures) Joueurs.J1.getDeckJ1()[nbre]).getName()+" TAKES "+this.nombre+" DAMAGES DIRECTLY");
+				System.out.println("MAGIC-LOG > LIFE LEFT OF ("+id.getName()+")"+((Creatures) Joueurs.J1.getDeckJ1()[nbre]).getName()+" > "+((Creatures) Joueurs.J1.getDeckJ1()[nbre]).getVie());
+				
+				((Creatures) Joueurs.J1.getDeckJ1()[nbre]).Meurt(Joueurs.J1);
+			}
+			else if(this.couleur == "Rouge" && nbre == -1 && this.effet == "Inflige 8 points de dégats au héro adverse"){ //Frappe le héro adverse
+				
+				int deg = Joueurs.J1.getVie() - this.nombre;
+				Joueurs.J1.setVie(deg);
+				
+				System.out.println("\nMAGIC-LOG > PLAYER "+id.getName()+" CAST "+this.getName()+" ON "+Joueurs.J1.getName());
+				System.out.println("MAGIC-LOG > "+id.getName()+" MANA LEFT: "+id.getMana()+"/"+id.getManaMax()+"" );
+				System.out.println("\nMAGIC-LOG > "+Joueurs.J1.getName()+" TAKES "+this.nombre+" DAMAGES DIRECTLY");
+				System.out.println("MAGIC-LOG > LIFE LEFT OF "+Joueurs.J1.getName()+" > "+Joueurs.J1.getVie());
+			}
+		}
+		if(this.couleur == "Bleu" && id.getMana() >= getCout() && id.isJoue() == true && this.getEtat() == 2){
+			setEtat(0); // Le sort est consumé, il disparait du jeu
+				
+			int cart3 = id.getNombreCartes() - 1; //On soustrait une carte à la main du joueur
+			id.setNombreCartes(cart3);
+				
+			int mn3 = id.getMana() - this.getCout(); //On soustrait le cout de la créature pour avoir le mana restant
+			id.setMana(mn3);
+				
+				
+			if(this.couleur == "Bleu" && nbre == -1 && this.effet == "Vous confère 2 cristaux de mana pour ce tour uniquement"){ //Sort sans cible
+			
+				int plus = Joueurs.J2.getMana() + 2;
+				Joueurs.J2.setMana(plus);
+			
+				System.out.println("\nMAGIC-LOG > PLAYER "+id.getName()+" CAST "+this.getName());
+				System.out.println("MAGIC-LOG > "+id.getName()+" MANA GOT FOR THIS TURN: "+id.getMana()+"/"+id.getManaMax()+"" );
+			}
+			}	
+
+		if(this.couleur == "Vert" && id.getMana() >= getCout() && id.isJoue() == true && this.getEtat() == 2 &&((Creatures) Joueurs.J2.getDeckJ2()[nbre]).getEtat() == 3){
+			setEtat(0); // Le sort est consumé, il disparait du jeu
+				
+			int cart2 = id.getNombreCartes() - 1;
+			id.setNombreCartes(cart2);
+				
+			int mn2 = id.getMana() - this.getCout(); //On soustrait le cout de la créature pour avoir le mana restant
+			id.setMana(mn2);
+			
+			if(this.couleur == "Vert" && nbre >= 0 && this.effet == "Donne +2/+2 à une créature"){ //Sort sans cible
+				
+				int vie = ((Creatures) Joueurs.J2.getDeckJ2()[nbre]).getVie() + 2;
+				((Creatures) Joueurs.J2.getDeckJ2()[nbre]).setVie(vie);
+				int force = ((Creatures) Joueurs.J2.getDeckJ2()[nbre]).getForce() + 2;
+				((Creatures) Joueurs.J2.getDeckJ2()[nbre]).setForce(force);
+			
+				System.out.println("\nMAGIC-LOG > PLAYER "+id.getName()+" CAST "+this.getName()+" ON "+((Creatures) Joueurs.J2.getDeckJ2()[nbre]).getName());
+				System.out.println("MAGIC-LOG > "+id.getName()+" MANA LEFT: "+id.getMana()+"/"+id.getManaMax()+"" );
+				System.out.println("MAGIC-LOG > "+((Creatures) Joueurs.J2.getDeckJ2()[nbre]).getName()+" IS NOW: "+((Creatures) Joueurs.J2.getDeckJ2()[nbre]).getForce()+"|"+((Creatures) Joueurs.J2.getDeckJ2()[nbre]).getVie()+"" );
+		}
+			}
+			if(this.couleur == "Noir" && id.getMana() >= getCout() && id.isJoue() == true && this.getEtat() == 2 &&((Ressources) Joueurs.J1.getDeckJ1()[nbre]).getEtat() == 3){
+				setEtat(0); // Le sort est consumé, il disparait du jeu
+				
+				int cart2 = id.getNombreCartes() - 1;
+				id.setNombreCartes(cart2);
+				
+				int mn2 = id.getMana() - this.getCout(); //On soustrait le cout de la créature pour avoir le mana restant
+				id.setMana(mn2);
+			
+				if(this.couleur == "Noir" && nbre >= 0 && this.effet == "Détruit un batiment"){ //Sort ayant un batiment comme cible
+					
+					((Ressources) Joueurs.J1.getDeckJ1()[nbre]).setVie(0);
+				
+					System.out.println("\nMAGIC-LOG > PLAYER "+id.getName()+" CAST "+this.getName()+" ON "+((Ressources) Joueurs.J1.getDeckJ1()[nbre]).getName());
+					System.out.println("MAGIC-LOG > "+id.getName()+" MANA LEFT: "+id.getMana()+"/"+id.getManaMax()+"" );
+					
+					((Creatures) Joueurs.J2.getDeckJ1()[nbre]).Meurt(Joueurs.J1);
+			}
+		}
+	}
+
+	
+
+
+	public String getCouleur() {
+		return couleur;
+	}
+
+	public void setCouleur(String couleur) {
+		this.couleur = couleur;
+	}
+
+	public String getEffet() {
+		return effet;
+	}
+
+	public void setEffet(String effet) {
+		this.effet = effet;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	
+
+}

@@ -1,0 +1,17 @@
+package test;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import pack.Joueurs;
+
+public class TestJoueurs {
+
+	@Test
+	public void test() {
+		Joueurs.J1.setVie(1);
+		Joueurs.J1.Meurt();
+	}
+
+}

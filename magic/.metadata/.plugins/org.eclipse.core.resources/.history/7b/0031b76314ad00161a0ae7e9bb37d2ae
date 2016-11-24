@@ -1,0 +1,93 @@
+package pack;
+
+public class Pouvoirs {
+	private String name;
+	private int cout;
+	private String desc;
+	
+	private boolean utilisable = true;
+	
+	public Pouvoirs(String name, int cout, String desc){
+		this.name = name;
+		this.cout = cout;
+		this.desc = desc;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getCout() {
+		return cout;
+	}
+
+	public void setCout(int cout) {
+		this.cout = cout;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public boolean isUtilisable() {
+		return utilisable;
+	}
+
+	public void setUtilisable(boolean utilisable) {
+		this.utilisable = utilisable;
+	}
+
+	public String toString(){
+		String retour;
+		
+		retour = "========== Pouvoir Héroique ==========";
+		retour+= "\nNom: "+this.name;
+		retour+= "\nCout"+this.cout;
+		retour+= "\nDescription: "+this.desc;
+		retour+= "\nUtilisable ?:"+this.utilisable;
+		retour+= "\n==============================";
+
+		return retour;
+	}
+	
+	static Pouvoirs P1 = new Pouvoirs("Explosion de feu", 2, "Inflige 1 point de dégats");
+	static Pouvoirs P2 = new Pouvoirs("Excès de mana", 0, "Vous confère un cristal de mana pour ce tour uniquement");
+	static Pouvoirs P3 = new Pouvoirs("Soins mineurs", 2, "Soigne 2 points de vie");
+	static Pouvoirs P4 = new Pouvoirs("Massacre", 2, "Inflige 3 points de dégats à une créature ennemie aléatoire");
+	static Pouvoirs P5 = new Pouvoirs("Recrutement", 2, "Invoque une créature 1/1");
+	static Pouvoirs P6 = new Pouvoirs("Sniper", 2, "Inflige 2 points de dégats au héro adverse");
+	static Pouvoirs P7 = new Pouvoirs("Tremblements", 3, "Inflige 2 points de dégats à tout les batiments ennemis");
+	static Pouvoirs P8 = new Pouvoirs("Corruption", 3, "Réduis l'attaque d'une créature ennemie à 1");
+	static Pouvoirs P9 = new Pouvoirs("Pioche", 2, "Vous piochez une carte");
+	static Pouvoirs P10 = new Pouvoirs("Résurrection", 3, "Réanime une créature alliée avec un point de vie");
+	static Pouvoirs P11 = new Pouvoirs("Soustraction", 4, "Réduis le cout de vos carte en main de 1 cristal de mana");
+
+	
+	public void Utiliser(int cible){
+		if(Joueurs.J1.getIdentifiant() == "J1" && this.isUtilisable() == true && this.name == "Explosion de feu" && this.cout >= Joueurs.J1.getMana()){
+			if(cible == -1){
+			this.setUtilisable(false); // Le pouvoir est joué ce tour
+			
+			int mn = Joueurs.J1.getMana() - this.getCout(); //On soustrait le cout du pouvoir pour avoir le mana restant
+			Joueurs.J1.setMana(mn);
+			
+			int deg = Joueurs.J2.getVie() - 1 ;
+			Joueurs.J2.setVie(deg);
+			
+			System.out.println("\nMAGIC-LOG > PLAYER "+Joueurs.J1.getName()+" USE "+this.getName()+" ON "+Joueurs.J2.getName());
+			System.out.println("MAGIC-LOG > "+Joueurs.J1.getName()+" MANA LEFT: "+Joueurs.J1.getMana()+"/"+Joueurs.J1.getManaMax()+"" );
+			System.out.println("\nMAGIC-LOG > "+Joueurs.J2.getName()+" TOOK 1 DAMAGE");
+			System.out.println("MAGIC-LOG > LIFE LEFT OF "+Joueurs.J2.getName()+" > "+Joueurs.J2.getVie());		
+			}
+		}
+		
+	}
+}

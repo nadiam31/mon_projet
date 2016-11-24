@@ -1,0 +1,52 @@
+package pack;
+
+public abstract class Cartes {
+	private String name;
+	private int cout;
+	private int etat = 1; //0 pour inéxistante/morte, 1 pour deck, 2 pour main, 3 pour plateau.
+	// De base, la carte se trouve dans le deck
+	
+	
+	public Cartes(String name, int cout){
+		this.name = name;
+		this.cout = cout;
+
+	}
+	
+// Getters et Setters
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getCout() {
+		return cout;
+	}
+	public void setCout(int cout) {
+		this.cout = cout;
+	}
+	public int getEtat() {
+		return etat;
+	}
+	public void setEtat(int etat) {
+		this.etat = etat;
+	}
+
+	public String toString(){
+		String retour;
+		
+		retour = "Nom: "+this.name;
+		retour+= "\nCout: "+this.cout;
+		
+		return retour;
+	}
+
+	//Méthodes Abstraites
+	public abstract void JouerJ1(Joueurs id, int nbre, int cible);
+	public abstract void JouerJ2(Joueurs id, int nbre, int cible);
+	
+	public abstract void FrappeJ1(Joueurs id, int nbre, Joueurs id2, int nbre2);
+	public abstract void FrappeJ2(Joueurs id, int nbre, Joueurs id2, int nbre2);
+	public abstract void FrappeHero(Joueurs id, int nbre, Joueurs id2, int nbre2);
+}

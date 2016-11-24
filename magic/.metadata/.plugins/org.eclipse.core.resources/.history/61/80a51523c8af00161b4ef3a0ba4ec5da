@@ -1,0 +1,267 @@
+package pack;
+
+import java.util.Random;
+
+public class Pouvoirs {
+	private String name;
+	private int cout;
+	private String desc;
+	
+	private boolean utilisable = true;
+	
+	public Pouvoirs(String name, int cout, String desc){
+		this.name = name;
+		this.cout = cout;
+		this.desc = desc;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getCout() {
+		return cout;
+	}
+
+	public void setCout(int cout) {
+		this.cout = cout;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public boolean isUtilisable() {
+		return utilisable;
+	}
+
+	public void setUtilisable(boolean utilisable) {
+		this.utilisable = utilisable;
+	}
+
+	public String toString(){
+		String retour;
+		
+		retour = "========== Pouvoir Héroique ==========";
+		retour+= "\nNom: "+this.name;
+		retour+= "\nCout"+this.cout;
+		retour+= "\nDescription: "+this.desc;
+		retour+= "\nUtilisable ?:"+this.utilisable;
+		retour+= "\n==============================";
+
+		return retour;
+	}
+	
+	static Pouvoirs P1 = new Pouvoirs("Explosion de feu", 2, "Inflige 1 point de dégats"); //FAIT
+	static Pouvoirs P2 = new Pouvoirs("Excès de mana", 0, "Vous confère un cristal de mana pour ce tour uniquement"); //FAIT
+	static Pouvoirs P3 = new Pouvoirs("Soins mineurs", 2, "Rend 2 points de vie à votre héro"); //FAIT
+	static Pouvoirs P4 = new Pouvoirs("Massacre", 2, "Inflige 3 points de dégats à une créature ennemie aléatoire"); //FAIT
+	static Pouvoirs P5 = new Pouvoirs("Recrutement", 2, "Invoque une créature 1/1"); //? 
+	static Pouvoirs P6 = new Pouvoirs("Sniper", 2, "Inflige 3 points de dégats au héro adverse"); //FAIT
+	static Pouvoirs P7 = new Pouvoirs("Tremblements", 3, "Inflige 2 points de dégats à tout les batiments ennemis");
+	static Pouvoirs P8 = new Pouvoirs("Corruption", 3, "Réduis l'attaque d'une créature ennemie à 1");
+	static Pouvoirs P9 = new Pouvoirs("Pioche", 1, "Vous piochez une carte, vous prennez 3 points de dégats"); //FAIT
+	static Pouvoirs P10 = new Pouvoirs("Résurrection", 3, "Réanime une créature alliée avec un point de vie"); //FAIT
+	static Pouvoirs P11 = new Pouvoirs("Soustraction", 4, "Réduis le cout de vos carte en main de 1 cristal de mana"); //FAIT
+	static Pouvoirs P12 = new Pouvoirs("Addition", 4, "Double le cout d'une carte aléatoire de votre adversaire"); //FAIT
+	
+	public void Utiliser(int cible){
+		if(Joueurs.J1.isJoue() == true && this.isUtilisable() == true && this.name == "Explosion de feu" && this.cout <= Joueurs.J1.getMana()){
+			if(cible == -1){
+				this.setUtilisable(false); // Le pouvoir est joué ce tour
+			
+				int mn = Joueurs.J1.getMana() - this.getCout(); //On soustrait le cout du pouvoir pour avoir le mana restant
+				Joueurs.J1.setMana(mn);
+			
+				int deg = Joueurs.J2.getVie() - 1 ;
+				Joueurs.J2.setVie(deg);
+			
+				System.out.println("\nMAGIC-LOG > PLAYER "+Joueurs.J1.getName()+" USE "+this.getName()+" ON "+Joueurs.J2.getName());
+				System.out.println("MAGIC-LOG > "+Joueurs.J1.getName()+" MANA LEFT: "+Joueurs.J1.getMana()+"/"+Joueurs.J1.getManaMax()+"" );
+				System.out.println("\nMAGIC-LOG > "+Joueurs.J2.getName()+" TOOK 1 DAMAGE");
+				System.out.println("MAGIC-LOG > LIFE LEFT OF "+Joueurs.J2.getName()+" > "+Joueurs.J2.getVie());		
+			}
+			if(cible >= 0){
+				this.setUtilisable(false); // Le pouvoir est joué ce tour
+				
+				int mn = Joueurs.J1.getMana() - this.getCout(); //On soustrait le cout du pouvoir pour avoir le mana restant
+				Joueurs.J1.setMana(mn);
+				
+				int deg = ((Creatures) Joueurs.J2.getDeckJ2()[cible]).getVie() - 1;
+				((Creatures) Joueurs.J2.getDeckJ2()[cible]).setVie(deg);	
+				
+				System.out.println("\nMAGIC-LOG > PLAYER "+Joueurs.J1.getName()+" USE "+this.getName()+" ON "+((Creatures) Joueurs.J2.getDeckJ2()[cible]).getName());
+				System.out.println("MAGIC-LOG > "+((Creatures) Joueurs.J2.getDeckJ2()[cible]).getName()+" TOOK 1 DAMAGE");
+				System.out.println("MAGIC-LOG > LIFE LEFT OF ("+Joueurs.J2.getName()+")"+((Creatures) Joueurs.J2.getDeckJ2()[cible]).getName()+" > "+((Creatures) Joueurs.J2.getDeckJ2()[cible]).getVie());
+				
+				((Creatures) Joueurs.J2.getDeckJ2()[cible]).Meurt(Joueurs.J2);		
+			}
+		}
+		if(Joueurs.J1.isJoue() == true && this.isUtilisable() == true && this.name == "Soins Mineurs" && this.cout <= Joueurs.J1.getMana()){
+				this.setUtilisable(false); // Le pouvoir est joué ce tour
+			
+				int mn = Joueurs.J1.getMana() - this.getCout(); //On soustrait le cout du pouvoir pour avoir le mana restant
+				Joueurs.J1.setMana(mn);
+				
+				int soin = Joueurs.J1.getVie() + 2;
+				Joueurs.J1.setVie(soin);
+			
+				System.out.println("\nMAGIC-LOG > PLAYER "+Joueurs.J1.getName()+" USE "+this.getName());
+				System.out.println("MAGIC-LOG > "+Joueurs.J1.getName()+" GAINS 2 HEALTH");
+				System.out.println("MAGIC-LOG > "+Joueurs.J1.getName()+" MANA LEFT: "+Joueurs.J1.getMana()+"/"+Joueurs.J1.getManaMax()+"" );
+			}
+		if(Joueurs.J1.isJoue() == true && this.isUtilisable() == true && this.name == "Excès de mana" && this.cout <= Joueurs.J1.getMana()){
+			this.setUtilisable(false); // Le pouvoir est joué ce tour
+			
+				int plus = Joueurs.J1.getMana() + 1;
+				Joueurs.J1.setMana(plus);
+			
+				System.out.println("\nMAGIC-LOG > PLAYER "+Joueurs.J1.getName()+" USE "+this.getName());
+				System.out.println("MAGIC-LOG > "+Joueurs.J1.getName()+" MANA GOT FOR THIS TURN: "+Joueurs.J1.getMana()+"/"+Joueurs.J1.getManaMax()+"" );
+			}
+		if(Joueurs.J1.isJoue() == true && this.isUtilisable() == true && this.name == "Massacre" && this.cout <= Joueurs.J1.getMana()){
+			if(Joueurs.J2.getDeckJ2()[0].getEtat() == 3 || Joueurs.J2.getDeckJ2()[1].getEtat() == 3 || Joueurs.J2.getDeckJ2()[2].getEtat() == 3 || Joueurs.J2.getDeckJ2()[9].getEtat() == 3 || Joueurs.J2.getDeckJ2()[12].getEtat() == 3 || Joueurs.J2.getDeckJ2()[13].getEtat() == 3){
+				this.setUtilisable(false); // Le pouvoir est joué ce tour
+			
+				int mn = Joueurs.J1.getMana() - this.getCout(); //On soustrait le cout du pouvoir pour avoir le mana restant
+				Joueurs.J1.setMana(mn);	
+			
+				System.out.println("\nMAGIC-LOG > PLAYER "+Joueurs.J1.getName()+" USE "+this.getName()+" ON A RANDOM ENNEMY MINION");
+				System.out.println("MAGIC-LOG > "+Joueurs.J1.getName()+" MANA LEFT: "+Joueurs.J1.getMana()+"/"+Joueurs.J1.getManaMax()+"" );
+				
+				boolean frappe = false;
+				
+				while(frappe == false){
+					Random rand = new Random(); //On génère un nombre aléatoire
+					int cib = rand.nextInt(16); //Entre 0 et 15
+										
+						if(Joueurs.J2.getDeckJ2()[cib].getType() == 1 && Joueurs.J2.getDeckJ2()[cib].getEtat() == 3){
+						
+							int deg = ((Creatures) Joueurs.J2.getDeckJ2()[cib]).getVie() - 3;
+							((Creatures) Joueurs.J2.getDeckJ2()[cib]).setVie(deg);
+					
+							System.out.println("\nMAGIC-LOG > "+((Creatures) Joueurs.J2.getDeckJ2()[cib]).getName()+" TOOK 3 DAMAGE");
+							System.out.println("MAGIC-LOG > LIFE LEFT OF ("+Joueurs.J2.getName()+")"+((Creatures) Joueurs.J2.getDeckJ2()[cib]).getName()+" > "+((Creatures) Joueurs.J2.getDeckJ2()[cib]).getVie());
+				
+							((Creatures) Joueurs.J2.getDeckJ2()[cib]).Meurt(Joueurs.J2);
+							frappe = true;
+				}	}	}	}
+		
+		if(Joueurs.J1.isJoue() == true && this.isUtilisable() == true && this.name == "Sniper" && this.cout <= Joueurs.J1.getMana()){
+				this.setUtilisable(false); // Le pouvoir est joué ce tour
+			
+				int mn = Joueurs.J1.getMana() - this.getCout(); //On soustrait le cout du pouvoir pour avoir le mana restant
+				Joueurs.J1.setMana(mn);
+			
+				int deg = Joueurs.J2.getVie() - 3 ;
+				Joueurs.J2.setVie(deg);
+			
+				System.out.println("\nMAGIC-LOG > PLAYER "+Joueurs.J1.getName()+" USE "+this.getName()+" ON "+Joueurs.J2.getName());
+				System.out.println("MAGIC-LOG > "+Joueurs.J1.getName()+" MANA LEFT: "+Joueurs.J1.getMana()+"/"+Joueurs.J1.getManaMax()+"" );
+				System.out.println("\nMAGIC-LOG > "+Joueurs.J2.getName()+" TOOK 3 DAMAGE");
+				System.out.println("MAGIC-LOG > LIFE LEFT OF "+Joueurs.J2.getName()+" > "+Joueurs.J2.getVie());		
+		}
+		if(Joueurs.J1.isJoue() == true && this.isUtilisable() == true && this.name == "Pioche" && this.cout <= Joueurs.J1.getMana()){
+			this.setUtilisable(false); // Le pouvoir est joué ce tour
+		
+			int mn = Joueurs.J1.getMana() - this.getCout(); //On soustrait le cout du pouvoir pour avoir le mana restant
+			Joueurs.J1.setMana(mn);
+			
+			int deg = Joueurs.J1.getVie() - 3 ;
+			Joueurs.J1.setVie(deg);
+		
+			System.out.println("\nMAGIC-LOG > PLAYER "+Joueurs.J1.getName()+" USE "+this.getName());
+			System.out.println("\nMAGIC-LOG > "+Joueurs.J1.getName()+" TOOK 3 DAMAGE");
+			System.out.println("MAGIC-LOG > LIFE LEFT OF "+Joueurs.J1.getName()+" > "+Joueurs.J1.getVie());		
+			System.out.println("MAGIC-LOG > "+Joueurs.J1.getName()+" MANA LEFT: "+Joueurs.J1.getMana()+"/"+Joueurs.J1.getManaMax()+"" );
+			
+			Joueurs.J1.Pioche();
+		}
+		
+			if(Joueurs.J1.isJoue() == true && this.isUtilisable() == true && this.name == "Soustraction" && this.cout <= Joueurs.J1.getMana()){
+				this.setUtilisable(false); // Le pouvoir est joué ce tour
+				
+				int mn = Joueurs.J1.getMana() - this.getCout(); //On soustrait le cout du pouvoir pour avoir le mana restant
+				Joueurs.J1.setMana(mn);
+			
+				System.out.println("\nMAGIC-LOG > PLAYER "+Joueurs.J1.getName()+" USE "+this.getName());
+				System.out.println("MAGIC-LOG > "+Joueurs.J1.getName()+" MANA LEFT: "+Joueurs.J1.getMana()+"/"+Joueurs.J1.getManaMax()+"" );
+			
+			for(int i = 0; i < Joueurs.J1.getDeckJ1().length; i++){
+				if(Joueurs.J1.getDeckJ1()[i].getEtat() == 2 && Joueurs.J1.getDeckJ1()[i].getCout() > 0){
+					int cout = Joueurs.J1.getDeckJ1()[i].getCout() - 1;
+					Joueurs.J1.getDeckJ1()[i].setCout(cout);
+					
+					System.out.println("MAGIC-LOG > "+Joueurs.J1.getDeckJ1()[i].getName()+" COST NOW "+ Joueurs.J1.getDeckJ1()[i].getCout());
+				}
+				
+			}		
+	
+		}
+			if(Joueurs.J1.isJoue() == true && this.isUtilisable() == true && this.name == "Addition" && this.cout <= Joueurs.J1.getMana()){
+					this.setUtilisable(false); // Le pouvoir est joué ce tour
+				
+					int mn = Joueurs.J1.getMana() - this.getCout(); //On soustrait le cout du pouvoir pour avoir le mana restant
+					Joueurs.J1.setMana(mn);	
+				
+					System.out.println("\nMAGIC-LOG > PLAYER "+Joueurs.J1.getName()+" USE "+this.getName());
+					System.out.println("MAGIC-LOG > "+Joueurs.J1.getName()+" MANA LEFT: "+Joueurs.J1.getMana()+"/"+Joueurs.J1.getManaMax()+"" );
+					
+					boolean effetUtilise = false;
+					
+					while(effetUtilise == false){
+						Random rand = new Random(); //On génère un nombre aléatoire
+						int cib = rand.nextInt(16); //Entre 0 et 15
+											
+							if(Joueurs.J2.getDeckJ2()[cib].getEtat() == 2){
+							
+								int cout = Joueurs.J2.getDeckJ2()[cib].getCout() * 2;
+								Joueurs.J2.getDeckJ2()[cib].setCout(cout);
+						
+								System.out.println("MAGIC-LOG > "+Joueurs.J2.getDeckJ2()[cib].getName()+" COST NOW "+ Joueurs.J2.getDeckJ2()[cib].getCout());
+					
+								effetUtilise = true;
+					}	}	}	
+			if(Joueurs.J1.isJoue() == true && this.isUtilisable() == true && this.name == "Résurrection" && this.cout <= Joueurs.J1.getMana()){
+				this.setUtilisable(false); // Le pouvoir est joué ce tour
+			
+				int mn = Joueurs.J1.getMana() - this.getCout(); //On soustrait le cout du pouvoir pour avoir le mana restant
+				Joueurs.J1.setMana(mn);	
+			
+				System.out.println("\nMAGIC-LOG > PLAYER "+Joueurs.J1.getName()+" USE "+this.getName());
+				System.out.println("MAGIC-LOG > "+Joueurs.J1.getName()+" MANA LEFT: "+Joueurs.J1.getMana()+"/"+Joueurs.J1.getManaMax()+"" );
+				
+				boolean effetUtilise = false;
+				int i;
+				
+				for( i = 0; i < Joueurs.J1.getDeckJ1().length; i++){
+					if(Joueurs.J1.getDeckJ1()[i].getEtat() == 0){
+						
+				
+				while(effetUtilise == false){
+					Random rand = new Random(); //On génère un nombre aléatoire
+					int cib = rand.nextInt(16); //Entre 0 et 15
+										
+						if(Joueurs.J1.getDeckJ1()[cib].getEtat() == 0 && Joueurs.J1.getDeckJ1()[cib].getType() == 1){
+						
+							Joueurs.J1.getDeckJ1()[cib].setEtat(3);
+							((Creatures) Joueurs.J1.getDeckJ1()[cib]).setVie(1);
+							
+							int crea = Plateau.getNbreCreatures() + 1;
+							Plateau.setNbreCreatures(crea);
+					
+							System.out.println("\nMAGIC-LOG > "+Joueurs.J1.getDeckJ1()[cib].getName()+" IS BACK WITH 1 HP ");
+				
+							effetUtilise = true;
+				}	}	}	}
+	}
+}}
+

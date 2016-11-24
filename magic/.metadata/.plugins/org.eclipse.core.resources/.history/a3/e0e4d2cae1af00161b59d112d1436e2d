@@ -1,0 +1,31 @@
+package test;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import pack.Creatures;
+import pack.Joueurs;
+import pack.Plateau;
+
+public class TestCreatures {
+
+	@Test
+	public void testMeurt() {
+		Plateau.setNbreCreatures(1); //Plateau avec 1 créature
+
+		((Creatures) Joueurs.J1.getDeckJ1()[0]).setVie(0); //La créature n'a plus de vie
+		((Creatures) Joueurs.J1.getDeckJ1()[0]).Meurt(Joueurs.J1); //Elle DOIT mourir
+		
+		int i = 1; //Nombre de créatures voulue sur la plateau
+		int j = 0; //Etat de la créature après la mort
+		assertSame("Should be the same", i,  Plateau.getNbreCreatures()); //Le plateau contient 0 créatures si elle est vraiment morte
+		assertSame("Should be the same", j, ((Creatures) Joueurs.J1.getDeckJ1()[0]).getEtat())
+		
+		/**
+		 * Si la créature est vraiment morte, le plateau contiendra une créature en moins. La créatures DOIT passer à l'état "mort" = 0
+		 * 
+		 */
+	}
+
+}

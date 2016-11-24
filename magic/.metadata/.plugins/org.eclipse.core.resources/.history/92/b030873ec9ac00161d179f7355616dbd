@@ -1,0 +1,121 @@
+package pack;
+
+public class Creatures extends Cartes {
+	//Traits de base
+	private int vie;
+	private int force;
+	
+		// Constructeur
+	public Creatures(String name, int cout, int vie, int force){
+		super(name, cout);
+		this.vie = vie;
+		this.force = force;
+	}
+	
+	//Getters en Setters
+	public int getVie() {
+		return vie;
+	}
+
+	public void setVie(int vie) {
+		this.vie = vie;
+	}
+
+	public int getForce() {
+		return force;
+	}
+
+	public void setForce(int force) {
+		this.force = force;
+	}
+	
+	//Méthode ToString
+	public String toString(){
+		String retour;
+		
+		retour = "========== Créature ==========";
+		retour+= "\n"+super.toString();
+		retour+= "\nVie: "+this.vie+"  Force: "+this.force;
+		retour+= "\n==============================";
+
+		return retour;
+	}
+	
+	// (Nom, Cout, Vie, Force) Instanciation
+	
+	//Creatures du joueur 1
+		static Creatures ID_1_1 = new Creatures("Soldat", 2, 3, 2);
+		static Creatures ID_2_1 = new Creatures("Magicien novice", 1, 2, 1);
+		static Creatures ID_3_1 = new Creatures("Videur", 2, 2, 2);
+		static Creatures ID_4_1 = new Creatures("Bourrin excité", 4, 2, 4);
+		static Creatures ID_5_1 = new Creatures("Tireur d'élite", 3, 1, 3);
+		static Creatures ID_6_1 = new Creatures("Chasseur impatient", 5, 2, 4);
+	//Creatures du joueur 2	
+		static Creatures ID_1_2 = new Creatures("Soldat", 2, 3, 2);
+		static Creatures ID_2_2 = new Creatures("Magicien novice", 1, 2, 1);
+		static Creatures ID_3_2 = new Creatures("Videur", 2, 2, 2);
+		static Creatures ID_4_2 = new Creatures("Bourrin excité", 4, 2, 4);
+		static Creatures ID_5_2 = new Creatures("Tireur d'élite", 3, 1, 3);
+		static Creatures ID_6_2 = new Creatures("Chasseur impatient", 5, 2, 4);
+	
+
+	public void JouerJ1(Joueurs id, int nbre, int cible){
+		if(id.getMana() >= ((Creatures) id.getDeckJ1()[nbre]).getCout() && Plateau.getNbreCreatures() < 10 && id.isJoue() == true && ((Creatures) id.getDeckJ1()[nbre]).getEtat() == 2){
+        // Verification de l'état général du jeu
+			((Creatures) id.getDeckJ1()[nbre]).setEtat(3);//Pose sur le plateau
+		
+        int crea = Plateau.getNbreCreatures() + 1; //On incrémente le nombre de créatures sur le plateau
+		Plateau.setNbreCreatures(crea);
+
+		int mn = id.getMana() - ((Creatures) id.getDeckJ1()[nbre]).getCout(); //On soustrait le cout de la créature pour avoir le mana restant
+		id.setMana(mn);
+		
+		int cart = id.getNombreCartes() - 1; //On soustrait une carte à la main du joueur
+		id.setNombreCartes(cart);
+		
+		System.out.println("\nMAGIC-LOG > PLAYER "+id.getName()+" PLAYS "+((Creatures) id.getDeckJ1()[nbre]).getName() +"("+((Creatures) id.getDeckJ1()[nbre]).getForce()+"|"+((Creatures) id.getDeckJ1()[nbre]).getVie()+")");
+		System.out.println("MAGIC-LOG > "+id.getName()+" MANA LEFT: "+id.getMana()+"/"+id.getManaMax()+"" );
+		System.out.println("MAGIC-LOG > THE BOARD HAVE "+Plateau.getNbreCreatures()+" MINIONS NOW" );
+		}
+		
+	}
+	
+	public void JouerJ2(Joueurs id, int nbre, int cible){
+		if(id.getMana() >= ((Creatures) id.getDeckJ2()[nbre]).getCout() && Plateau.getNbreCreatures() < 10 && id.isJoue() == true && ((Creatures) id.getDeckJ2()[nbre]).getEtat() == 2){
+        // Verification de l'état général du jeu
+			((Creatures) id.getDeckJ2()[nbre]).setEtat(3);//Pose sur le plateau
+		
+        int crea = Plateau.getNbreCreatures() + 1; //On incrémente le nombre de créatures sur le plateau
+		Plateau.setNbreCreatures(crea);
+
+		int mn = id.getMana() - ((Creatures) id.getDeckJ2()[nbre]).getCout(); //On soustrait le cout de la créature pour avoir le mana restant
+		id.setMana(mn);
+		
+		int cart = id.getNombreCartes() - 1; //On soustrait une carte à la main du joueur
+		id.setNombreCartes(cart);
+		
+		System.out.println("\nMAGIC-LOG > PLAYER "+id.getName()+" PLAYS "+((Creatures) id.getDeckJ2()[nbre]).getName() +"("+((Creatures) id.getDeckJ2()[nbre]).getForce()+"|"+((Creatures) id.getDeckJ2()[nbre]).getVie()+")");
+		System.out.println("MAGIC-LOG > "+id.getName()+" MANA LEFT: "+id.getMana()+"/"+id.getManaMax()+"" );
+		System.out.println("MAGIC-LOG > THE BOARD HAVE "+Plateau.getNbreCreatures()+" MINIONS NOW" );
+	}
+		
+		
+	}
+	
+		
+	
+	public void Meurt(Joueurs id){
+		if(this.vie <= 0) {
+
+			this.setEtat(0); //Supprime la carte du jeu
+
+	        int crea = Plateau.getNbreCreatures() - 1; //On décrémente le nombre de créatures sur le plateau
+			Plateau.setNbreCreatures(crea);	
+			
+			System.out.println("\nMAGIC-LOG > ("+id.getName()+")"+this.getName()+" IS DEAD | REMOVED");
+			System.out.println("MAGIC-LOG > THE BOARD HAVE "+Plateau.getNbreCreatures()+" MINIONS NOW" );
+	
+		}
+	}
+	
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="java.util.Scanner"/>
+<fullyQualifiedTypeName name="pack.Collection"/>
+<fullyQualifiedTypeName name="java.awt.Font"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
+<fullyQualifiedTypeName name="pack.Cartes"/>
+<fullyQualifiedTypeName name="java.awt.font.NumericShaper.Range"/>
+<fullyQualifiedTypeName name="java.util.stream.IntStream"/>
+<fullyQualifiedTypeName name="pack.Plateau"/>
+<fullyQualifiedTypeName name="pack.Joueurs"/>
+<fullyQualifiedTypeName name="pack.Creatures"/>
+</qualifiedTypeNameHistroy>

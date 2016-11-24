@@ -1,0 +1,220 @@
+package pack;
+
+public class TestCartes {
+
+	public static void main(String[] args){
+
+	//	Creatures ID1 = new Creatures("Mage", 3, 2, 2, "Cri de guerre: Inflige 1 point de dégats");
+	//	System.out.println(ID1.toString());
+		Joueurs.Init();
+		
+		Joueurs.J1.PasseJ1(Joueurs.J2); //Passe
+		
+		Joueurs.J2.PasseJ2(Joueurs.J1); //Passe == Tour 2
+		
+		Joueurs.J1.PasseJ1(Joueurs.J2); //Passe
+		
+		Joueurs.J2.getDeckJ2()[0].JouerJ2(Joueurs.J2, 0, 0);
+		Joueurs.J2.getDeckJ2()[11].JouerJ2(Joueurs.J2, 0, 0);
+		Joueurs.J2.getDeckJ2()[9].JouerJ2(Joueurs.J2, 9, 0);
+		Joueurs.J2.getDeckJ2()[0].FrappeHero(Joueurs.J2, Joueurs.J1);
+		Joueurs.J2.getDeckJ2()[9].FrappeHero(Joueurs.J2, Joueurs.J1);
+		
+		Joueurs.J2.PasseJ2(Joueurs.J1); //Passe == Tour 3
+
+		Joueurs.J1.getDeckJ1()[0].JouerJ1(Joueurs.J1, 0, 0);
+		Joueurs.J1.getDeckJ1()[7].JouerJ1(Joueurs.J1, 3, 0);
+		Joueurs.J1.getDeckJ1()[7].JouerJ1(Joueurs.J1, 4, 0);
+		Joueurs.J1.getDeckJ1()[11].JouerJ1(Joueurs.J1, 0, 0);
+		Joueurs.J1.getDeckJ1()[10].JouerJ1(Joueurs.J1, -1, 0);
+		Joueurs.J1.getDeckJ1()[2].JouerJ1(Joueurs.J1, 2, 0);
+		Joueurs.J1.getDeckJ1()[0].FrappeHero(Joueurs.J1, Joueurs.J2);
+		
+		Joueurs.J1.PasseJ1(Joueurs.J2); //Passe
+		
+		Joueurs.J2.getDeckJ2()[0].JouerJ2(Joueurs.J2, 0, 0);
+		Joueurs.J2.getDeckJ2()[11].JouerJ2(Joueurs.J2, 0, 0);
+		Joueurs.J2.getDeckJ2()[11].JouerJ2(Joueurs.J2, 2, 0);
+		Joueurs.J2.getDeckJ2()[9].JouerJ2(Joueurs.J2, 9, 0);
+		Joueurs.J2.getDeckJ2()[0].FrappeHero(Joueurs.J2, Joueurs.J1);
+		Joueurs.J2.getDeckJ2()[9].FrappeHero(Joueurs.J2, Joueurs.J1);
+		
+		Joueurs.J2.PasseJ2(Joueurs.J1); //Passe == Tour 4
+
+		Joueurs.J1.getDeckJ1()[0].JouerJ1(Joueurs.J1, 0, 0);
+		Joueurs.J1.getDeckJ1()[7].JouerJ1(Joueurs.J1, 3, 0);
+		Joueurs.J1.getDeckJ1()[7].JouerJ1(Joueurs.J1, 4, 0);
+		Joueurs.J1.getDeckJ1()[10].JouerJ1(Joueurs.J1, -1, 0);
+		Joueurs.J1.getDeckJ1()[2].JouerJ1(Joueurs.J1, 2, 0);
+		Joueurs.J1.getDeckJ1()[3].JouerJ1(Joueurs.J1, 3, 0);
+		
+		Joueurs.J1.PasseJ1(Joueurs.J2);	//Passe
+		
+		Joueurs.J2.getDeckJ2()[0].JouerJ2(Joueurs.J2, 0, 0);
+		Joueurs.J2.getDeckJ2()[11].JouerJ2(Joueurs.J2, 0, 0);
+		Joueurs.J2.getDeckJ2()[11].JouerJ2(Joueurs.J2, 2, 0);
+		Joueurs.J2.getDeckJ2()[9].JouerJ2(Joueurs.J2, 9, 0);
+		Joueurs.J2.getDeckJ2()[0].FrappeHero(Joueurs.J2, Joueurs.J1);
+		Joueurs.J2.getDeckJ2()[9].FrappeHero(Joueurs.J2, Joueurs.J1);
+		
+		Joueurs.J2.PasseJ2(Joueurs.J1); //Passe == Tour 5
+		
+		Joueurs.J1.getDeckJ1()[0].JouerJ1(Joueurs.J1, 0, 0);
+		Joueurs.J1.getDeckJ1()[10].JouerJ1(Joueurs.J1, -1, 0);
+		Joueurs.J1.getDeckJ1()[0].FrappeHero(Joueurs.J1, Joueurs.J2);
+		Joueurs.J1.getDeckJ1()[2].JouerJ1(Joueurs.J1, 2, 0);
+		Joueurs.J1.getDeckJ1()[4].JouerJ1(Joueurs.J1, 4, 0);
+		Joueurs.J1.getDeckJ1()[3].JouerJ1(Joueurs.J1, 3, 0);
+		Joueurs.J1.getDeckJ1()[5].JouerJ1(Joueurs.J1, -1, 0);
+		Joueurs.J1.getDeckJ1()[7].JouerJ1(Joueurs.J1, 3, 0);
+		Joueurs.J1.getDeckJ1()[7].JouerJ1(Joueurs.J1, 4, 0);
+		
+		Joueurs.J1.PasseJ1(Joueurs.J2);	 //Passe
+		
+		Joueurs.J2.getDeckJ2()[0].JouerJ2(Joueurs.J2, 0, 0);
+		Joueurs.J2.getDeckJ2()[11].JouerJ2(Joueurs.J2, 0, 0);
+		Joueurs.J2.getDeckJ2()[11].JouerJ2(Joueurs.J2, 2, 0);
+		Joueurs.J2.getDeckJ2()[0].FrappeJ2(Joueurs.J2, 0, Joueurs.J1, 0);
+		Joueurs.J2.getDeckJ2()[9].JouerJ2(Joueurs.J2, 9, 0);
+		Joueurs.J2.getDeckJ2()[0].FrappeHero(Joueurs.J2, Joueurs.J1);
+		Joueurs.J2.getDeckJ2()[9].FrappeHero(Joueurs.J2, Joueurs.J1);
+		Joueurs.J2.getDeckJ2()[4].JouerJ2(Joueurs.J2, 4, 0);
+		Joueurs.J2.getDeckJ2()[3].JouerJ2(Joueurs.J2, 3, 0);
+		
+		Joueurs.J2.PasseJ2(Joueurs.J1); //Passe == Tour 6
+		
+		Joueurs.J1.getDeckJ1()[0].JouerJ1(Joueurs.J1, 0, 0);
+		Joueurs.J1.getDeckJ1()[10].JouerJ1(Joueurs.J1, -1, 0);
+		Joueurs.J1.getDeckJ1()[2].JouerJ1(Joueurs.J1, 2, 0);
+		Joueurs.J1.getDeckJ1()[1].JouerJ1(Joueurs.J1, 1, -1);
+		Joueurs.J1.getDeckJ1()[0].FrappeJ1(Joueurs.J1, 0, Joueurs.J2, 0);
+		Joueurs.J1.getDeckJ1()[0].FrappeHero(Joueurs.J1, Joueurs.J2);
+		Joueurs.J1.getDeckJ1()[1].FrappeJ1(Joueurs.J1, 0, Joueurs.J2, 0);
+		Joueurs.J1.getDeckJ1()[1].FrappeHero(Joueurs.J1, Joueurs.J2);
+		Joueurs.J1.getDeckJ1()[4].JouerJ1(Joueurs.J1, 4, 0);
+		Joueurs.J1.getDeckJ1()[3].JouerJ1(Joueurs.J1, 3, 0);
+		Joueurs.J1.getDeckJ1()[5].JouerJ1(Joueurs.J1, -1, 0);
+		Joueurs.J1.getDeckJ1()[7].JouerJ1(Joueurs.J1, 3, 0);
+		Joueurs.J1.getDeckJ1()[7].JouerJ1(Joueurs.J1, 4, 0);
+		
+		Joueurs.J1.PasseJ1(Joueurs.J2);	//Passe
+		
+		Joueurs.J2.getDeckJ2()[0].JouerJ2(Joueurs.J2, 0, 0);
+		Joueurs.J2.getDeckJ2()[11].JouerJ2(Joueurs.J2, 0, 0);
+		Joueurs.J2.getDeckJ2()[11].JouerJ2(Joueurs.J2, 2, 0);
+		Joueurs.J2.getDeckJ2()[0].FrappeJ2(Joueurs.J2, 0, Joueurs.J1, 0);
+		Joueurs.J2.getDeckJ2()[9].JouerJ2(Joueurs.J2, 9, 0);
+		Joueurs.J2.getDeckJ2()[0].FrappeHero(Joueurs.J2, Joueurs.J1);
+		Joueurs.J2.getDeckJ2()[9].FrappeHero(Joueurs.J2, Joueurs.J1);
+		Joueurs.J2.getDeckJ2()[4].JouerJ2(Joueurs.J2, 4, 0);
+		Joueurs.J2.getDeckJ2()[3].JouerJ2(Joueurs.J2, 3, 0);
+		
+		Joueurs.J2.PasseJ2(Joueurs.J1); //Passe == Tour 7
+		
+		Joueurs.J1.getDeckJ1()[0].JouerJ1(Joueurs.J1, 0, 0);
+		Joueurs.J1.getDeckJ1()[10].JouerJ1(Joueurs.J1, -1, 0);
+		Joueurs.J1.getDeckJ1()[0].FrappeJ1(Joueurs.J1, 0, Joueurs.J2, 0);
+		Joueurs.J1.getDeckJ1()[0].FrappeHero(Joueurs.J1, Joueurs.J2);
+		Joueurs.J1.getDeckJ1()[4].JouerJ1(Joueurs.J1, 4, 0);
+		Joueurs.J1.getDeckJ1()[3].JouerJ1(Joueurs.J1, 3, 0);
+		Joueurs.J1.getDeckJ1()[5].JouerJ1(Joueurs.J1, -1, 0);
+		Joueurs.J1.getDeckJ1()[7].JouerJ1(Joueurs.J1, 3, 0);
+		Joueurs.J1.getDeckJ1()[7].JouerJ1(Joueurs.J1, 4, 0);
+		
+		Joueurs.J1.PasseJ1(Joueurs.J2);	//Passe
+		 
+		Joueurs.J2.getDeckJ2()[0].JouerJ2(Joueurs.J2, 0, 0);
+		Joueurs.J2.getDeckJ2()[0].FrappeJ2(Joueurs.J2, 0, Joueurs.J1, 0);
+		Joueurs.J2.getDeckJ2()[9].JouerJ2(Joueurs.J2, 9, 0);
+		Joueurs.J2.getDeckJ2()[0].FrappeHero(Joueurs.J2, Joueurs.J1);
+		Joueurs.J2.getDeckJ2()[9].FrappeHero(Joueurs.J2, Joueurs.J1);
+		Joueurs.J2.getDeckJ2()[4].JouerJ2(Joueurs.J2, 4, 0);
+		Joueurs.J2.getDeckJ2()[3].JouerJ2(Joueurs.J2, 3, 0);
+		Joueurs.J2.getDeckJ2()[11].JouerJ2(Joueurs.J2, 0, 0);
+		Joueurs.J2.getDeckJ2()[11].JouerJ2(Joueurs.J2, 2, 0);
+		
+		Joueurs.J2.PasseJ2(Joueurs.J1); //Passe == Tour 8
+		
+		Joueurs.J1.getDeckJ1()[0].JouerJ1(Joueurs.J1, 0, 0);
+		Joueurs.J1.getDeckJ1()[10].JouerJ1(Joueurs.J1, -1, 0);
+		Joueurs.J1.getDeckJ1()[0].FrappeJ1(Joueurs.J1, 0, Joueurs.J2, 0);
+		Joueurs.J1.getDeckJ1()[0].FrappeHero(Joueurs.J1, Joueurs.J2);
+		Joueurs.J1.getDeckJ1()[4].JouerJ1(Joueurs.J1, 4, 0);
+		Joueurs.J1.getDeckJ1()[3].JouerJ1(Joueurs.J1, 3, 0);
+		Joueurs.J1.getDeckJ1()[5].JouerJ1(Joueurs.J1, -1, 0);
+		
+		Joueurs.J1.PasseJ1(Joueurs.J2);	
+		
+		Joueurs.J2.getDeckJ2()[0].JouerJ2(Joueurs.J2, 0, 0);
+		Joueurs.J2.getDeckJ2()[0].FrappeJ2(Joueurs.J2, 0, Joueurs.J1, 0);
+		Joueurs.J2.getDeckJ2()[9].JouerJ2(Joueurs.J2, 9, 0);
+		Joueurs.J2.getDeckJ2()[0].FrappeHero(Joueurs.J2, Joueurs.J1);
+		Joueurs.J2.getDeckJ2()[9].FrappeHero(Joueurs.J2, Joueurs.J1);
+		Joueurs.J2.getDeckJ2()[4].JouerJ2(Joueurs.J2, 4, 0);
+		Joueurs.J2.getDeckJ2()[3].JouerJ2(Joueurs.J2, 3, 0);
+		
+		Joueurs.J2.PasseJ2(Joueurs.J1); //Passe == Tour 9
+		
+		Joueurs.J1.getDeckJ1()[0].JouerJ1(Joueurs.J1, 0, 0);
+		Joueurs.J1.getDeckJ1()[10].JouerJ1(Joueurs.J1, -1, 0);
+		Joueurs.J1.getDeckJ1()[0].FrappeJ1(Joueurs.J1, 0, Joueurs.J2, 0);
+		Joueurs.J1.getDeckJ1()[0].FrappeHero(Joueurs.J1, Joueurs.J2);
+		Joueurs.J1.getDeckJ1()[4].JouerJ1(Joueurs.J1, 4, 0);
+		Joueurs.J1.getDeckJ1()[3].JouerJ1(Joueurs.J1, 3, 0);
+		Joueurs.J1.getDeckJ1()[5].JouerJ1(Joueurs.J1, -1, 0);
+		
+		Joueurs.J1.PasseJ1(Joueurs.J2);	
+		
+		Joueurs.J2.getDeckJ2()[0].JouerJ2(Joueurs.J2, 0, 0);
+		Joueurs.J2.getDeckJ2()[0].FrappeJ2(Joueurs.J2, 0, Joueurs.J1, 0);
+		Joueurs.J2.getDeckJ2()[9].JouerJ2(Joueurs.J2, 9, 0);
+		Joueurs.J2.getDeckJ2()[0].FrappeHero(Joueurs.J2, Joueurs.J1);
+		Joueurs.J2.getDeckJ2()[9].FrappeHero(Joueurs.J2, Joueurs.J1);
+		Joueurs.J2.getDeckJ2()[4].JouerJ2(Joueurs.J2, 4, 0);
+		Joueurs.J2.getDeckJ2()[3].JouerJ2(Joueurs.J2, 3, 0);
+		
+		Joueurs.J2.PasseJ2(Joueurs.J1); //Passe == Tour 10
+		
+		Joueurs.J1.getDeckJ1()[0].JouerJ1(Joueurs.J1, 0, 0);
+		Joueurs.J1.getDeckJ1()[10].JouerJ1(Joueurs.J1, -1, 0);
+		Joueurs.J1.getDeckJ1()[0].FrappeJ1(Joueurs.J1, 0, Joueurs.J2, 0);
+		Joueurs.J1.getDeckJ1()[0].FrappeHero(Joueurs.J1, Joueurs.J2);
+		Joueurs.J1.getDeckJ1()[4].JouerJ1(Joueurs.J1, 4, 0);
+		Joueurs.J1.getDeckJ1()[3].JouerJ1(Joueurs.J1, 3, 0);
+		Joueurs.J1.getDeckJ1()[5].JouerJ1(Joueurs.J1, -1, 0);
+		
+		Joueurs.J1.PasseJ1(Joueurs.J2);	
+		
+		Joueurs.J2.getDeckJ2()[0].JouerJ2(Joueurs.J2, 0, 0);
+		Joueurs.J2.getDeckJ2()[0].FrappeJ2(Joueurs.J2, 0, Joueurs.J1, 0);
+		Joueurs.J2.getDeckJ2()[9].JouerJ2(Joueurs.J2, 9, 0);
+		Joueurs.J2.getDeckJ2()[0].FrappeHero(Joueurs.J2, Joueurs.J1);
+		Joueurs.J2.getDeckJ2()[9].FrappeHero(Joueurs.J2, Joueurs.J1);
+		Joueurs.J2.getDeckJ2()[4].JouerJ2(Joueurs.J2, 4, 0);
+		Joueurs.J2.getDeckJ2()[3].JouerJ2(Joueurs.J2, 3, 0);
+		
+		Joueurs.J2.PasseJ2(Joueurs.J1); //Passe == Tour 11
+		
+		Joueurs.J1.getDeckJ1()[0].JouerJ1(Joueurs.J1, 0, 0);
+		Joueurs.J1.getDeckJ1()[10].JouerJ1(Joueurs.J1, -1, 0);
+		Joueurs.J1.getDeckJ1()[0].FrappeJ1(Joueurs.J1, 0, Joueurs.J2, 0);
+		Joueurs.J1.getDeckJ1()[0].FrappeHero(Joueurs.J1, Joueurs.J2);
+		Joueurs.J1.getDeckJ1()[4].JouerJ1(Joueurs.J1, 4, 0);
+		Joueurs.J1.getDeckJ1()[3].JouerJ1(Joueurs.J1, 3, 0);
+		Joueurs.J1.getDeckJ1()[5].JouerJ1(Joueurs.J1, -1, 0);
+		
+		Joueurs.J1.PasseJ1(Joueurs.J2);	
+		
+		Joueurs.J2.getDeckJ2()[0].JouerJ2(Joueurs.J2, 0, 0);
+		Joueurs.J2.getDeckJ2()[0].FrappeJ2(Joueurs.J2, 0, Joueurs.J1, 0);
+		Joueurs.J2.getDeckJ2()[9].JouerJ2(Joueurs.J2, 9, 0);
+		Joueurs.J2.getDeckJ2()[0].FrappeHero(Joueurs.J2, Joueurs.J1);
+		Joueurs.J2.getDeckJ2()[9].FrappeHero(Joueurs.J2, Joueurs.J1);
+		Joueurs.J2.getDeckJ2()[4].JouerJ2(Joueurs.J2, 4, 0);
+		Joueurs.J2.getDeckJ2()[3].JouerJ2(Joueurs.J2, 3, 0);
+				
+		
+		// BUG 0001 - Les cartes changent de valeures dans les deuc decks lorsqu'elles sont jouées, piochées ou mortes
+		// 
+
+	}}
